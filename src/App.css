@@ -1,0 +1,41 @@
+:root {
+  margin: 0;
+  padding: 0;
+  --bg-color0: #55931F;
+  --bg-color1: #3A6FB4;
+  --bg-color2: #863AB4;
+  --bg-color3: #F50067;
+  --bg-color4: #215182;
+  --bg-color5: #3A4AB4;
+  --bg-color6: red;
+  --bg-color7: #3AB0B4;
+  --bg-color8: #E89A00;
+  --bg-color9: #55338E;
+  --bg-color10: blue;
+
+  --heght-bk: 60px;
+
+  --bg-body: cornflowerblue;
+}
+.bk-body {
+  font-weight: 400px;
+  font-size: 14px;
+  font-family: sans-serif, Arial;
+  background: var(--bg-body);
+}
+
+.bk-flex-contener {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    /* border: 1px solid red; */
+}
+.bk-main-contener {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-wrap: wrap;
+    width: 1400px;
+    min-height: 800px;
+    /* border: 1px solid blue; */
+}
