@@ -3,7 +3,7 @@
     display: flex;
     /* width: 400px; */
     flex-direction: row;
-    background: rgb(95, 110, 211);
+    /* background: rgb(195, 203, 252); */
     border: 1px solid #888;
     border-radius: 5px;
 }
@@ -14,6 +14,7 @@
 .bk-open-folder {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     /* width: 400px; */
     /* height: var(--heght-bk); */
     flex-direction: row;

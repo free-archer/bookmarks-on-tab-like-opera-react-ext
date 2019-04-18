@@ -6,11 +6,15 @@ const getClassColor = () => {
     const className = { backgroundColor: `var(--bg-color${colorInd})` }
     return className
 }
+const cutTitle=(title) => {
+    return title.substring(0, 40);
+}
 
 const actionClickBk = (url, evt) => {
     evt.preventDefault();
-    //window.open(url).focus();
-    window.open(url, "_self");
+    window.open(url).focus();
+    //window.open(url, "_self");
+    //window.location = url;
 }
 
 export default ({ title, currentBk }) => {
@@ -21,7 +25,7 @@ export default ({ title, currentBk }) => {
             style={style}
             onClick={(evt) => actionClickBk(currentBk.url, evt)}
         >
-            {title}
+            {cutTitle(title)}
 
 
         </div>
