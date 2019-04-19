@@ -8,11 +8,9 @@ class App extends Component {
         this.state = {
             bookmarks: null
         }
-
     }
 
     componentDidMount = () => {
-        //this.setState({ bookmarks: this.props.bk })
         this.getBookmarks();
     }
 
@@ -23,6 +21,7 @@ class App extends Component {
             this.getBookmarksFromFile();
         }
     }
+
     getBookmarksFromFile = () => {
         // const bk = import("./bookmarks.js");
         // bk.then(res => {
@@ -32,8 +31,6 @@ class App extends Component {
     getBookmarksFromChrome = () => {
         console.log(chrome);
         chrome.bookmarks.getTree(bookmarkTree => {
-            console.log("bookmarks tree -> " + bookmarkTree);
-            console.log(bookmarkTree);
             const bookmarks = bookmarkTree[0].children[0];
             this.setState({ bookmarks: bookmarks })
             //bkContener.textContent= JSON.stringify(startTreeNodes[0].children[0].children[0])
@@ -44,7 +41,6 @@ class App extends Component {
         if (!this.state.bookmarks) return ('Is Empty');
 
         const bookmarks = this.state.bookmarks.children
-        //console.log(bookmarks)
 
         return (
             <div className="bk-flex-contener">

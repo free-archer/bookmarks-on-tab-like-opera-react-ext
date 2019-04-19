@@ -18,13 +18,11 @@ export default class BkContainer extends Component {
 
     setOpenFolder = (id) => {
         this.setState({ isOpenFolder: !this.state.isOpenFolder })
-        console.log('click Container' + id)
     }
 
     render() {
         const { title, bkFolder } = this.props
         let renderComponent = []
-        console.log('render ' + bkFolder.id)
 
         if (!bkFolder.children) {
             renderComponent.push(
