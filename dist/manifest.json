@@ -1,17 +1,29 @@
 {
-  "manifest_version": 2,
-  "name": "My Extension",
-  "description": "This extension is a starting point to create a real Chrome extension",
-  "version": "0.0.1",
-  "browser_action": {
-    "default_icon": "images/sample.png",
-    "default_popup": "index.html",
-    "default_title": "Open the popup"
-  },
+  "name": "bookmarks-on-tab-like-opera-react",
+  "version": "0.1",
+  "description": "bookmarks-on-tab-like-opera",
   "permissions": [
     "declarativeContent",
     "storage",
     "activeTab",
-    "bookmarks"
-  ]
+    "bookmarks",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "Boolmarks tabs"
+  },
+  "icons": {
+    "16": "images/logo_16.png",
+    "32": "images/logo_32.png",
+    "48": "images/logo_48.png",
+    "128": "images/logo_128.png"
+  },
+  "options_page": "options.html",
+  "manifest_version": 2
 }
