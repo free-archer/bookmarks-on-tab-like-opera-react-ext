@@ -13,7 +13,8 @@
   --bg-color9: #55338E;
   --bg-color10: blue;
 
-  --heght-bk: 60px;
+  --heght-bk: 90px;
+  --width-bk: 120px;
 
   --bg-body: cornflowerblue;
 }
@@ -28,12 +29,13 @@
     display: flex;
     justify-content: center;
     justify-items: center;
+    margin-top: 50px;
     /* border: 1px solid red; */
 }
 .bk-main-contener {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
     width: 1400px;
     min-height: 800px;

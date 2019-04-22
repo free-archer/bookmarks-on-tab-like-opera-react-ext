@@ -6,8 +6,10 @@
     margin-bottom: 5px;
     margin-left: 5px;
     margin-right: 5px;
-    width: 200px;
-    height: 140;
+    width: calc( var(--width-bk) *2.07);
+    height: calc( var(--height-bk) *2.07);
+    /*width: 260px;*/
+    /*height: 140px;*/
     overflow: hidden;
 }
 .title {

@@ -14,6 +14,21 @@ export default class BkItem extends React.PureComponent {
         return className
     }
 
+    getClassColorFromId(currentBk) {
+        if (currentBk) {
+            const colorInd = currentBk.id.substr(-1)
+            const className = { backgroundColor: `var(--bg-color${colorInd})` }
+            return className
+        } else {
+            const className = { backgroundColor: `var(--bg-color0)` }
+            return className
+        }
+    }
+
+    cutTitle(title) {
+        return title.substring(0, 40)
+    }
+
     actionClickBk(url, evt) {
         evt.preventDefault();
         window.open(url).focus();
@@ -22,7 +37,8 @@ export default class BkItem extends React.PureComponent {
 
     render() {
         const { currentBk, title } = this.props
-        const style = this.getClassColor()
+        //const style = this.getClassColor()
+        const style = this.getClassColorFromId(currentBk)
 
         return (
             <div
@@ -30,7 +46,7 @@ export default class BkItem extends React.PureComponent {
                 style={style}
                 onClick={(evt) => this.actionClickBk(currentBk.url, evt)}
             >
-                {title}
+                {this.cutTitle(title)}
             </div>
         )
     }
