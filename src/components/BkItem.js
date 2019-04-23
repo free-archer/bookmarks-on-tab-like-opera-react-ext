@@ -31,8 +31,8 @@ export default class BkItem extends React.PureComponent {
 
     actionClickBk(url, evt) {
         evt.preventDefault();
-        window.open(url).focus();
-        //window.open(url, "_self");
+        //window.open(url).focus();
+        window.open(url, "_self");
     }
 
     render() {

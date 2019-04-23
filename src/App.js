@@ -11,29 +11,14 @@ class App extends Component {
     }
 
     componentDidMount = () => {
-        this.getBookmarks();
+        this.getBookmarksFromChrome();
     }
 
-    getBookmarks = () => {
-        if (chrome && chrome.permissions) {
-            this.getBookmarksFromChrome();
-        } else {
-            this.getBookmarksFromFile();
-        }
-    }
-
-    getBookmarksFromFile = () => {
-        // const bk = import("./bookmarks.js");
-        // bk.then(res => {
-        //     this.bookmarks = res.bk.children;
-        // });
-    }
     getBookmarksFromChrome = () => {
         console.log(chrome);
         chrome.bookmarks.getTree(bookmarkTree => {
             const bookmarks = bookmarkTree[0].children[0];
             this.setState({ bookmarks: bookmarks })
-            //bkContener.textContent= JSON.stringify(startTreeNodes[0].children[0].children[0])
         });
     }
 

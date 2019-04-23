@@ -1,7 +1,7 @@
 {
   "name": "bookmarks-on-tab-like-opera-react",
-  "version": "0.1",
-  "description": "bookmarks-on-tab-like-opera",
+  "version": "0.0.2",
+  "description": "Bookmarks on tab like opera",
   "permissions": [
     "declarativeContent",
     "storage",
@@ -16,7 +16,7 @@
     "persistent": false
   },
   "browser_action": {
-    "default_title": "Boolmarks tabs"
+    "default_title": "Boolmarks"
   },
   "icons": {
     "16": "images/icon-16.png",
