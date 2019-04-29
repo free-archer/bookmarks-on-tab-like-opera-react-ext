@@ -17,6 +17,26 @@ class App extends Component {
     getBookmarksFromChrome = () => {
         chrome.bookmarks.getTree(bookmarkTree => {
             const bookmarks = [...bookmarkTree[0].children[0].children, ...bookmarkTree[0].children[1].children, bookmarkTree[0].children[2]]
+
+            //попытка сделать папку для закладок без папки
+            // const emptyFolder = { title: 'Пустая', id: 89898989, index: 0, children: [] }
+            // console.log(bookmarks)
+            // for (let i in bookmarks) {
+
+            //     const curBk = bookmarks[i]
+
+            //     if (!curBk.children) {
+            //         curBk.index = emptyFolder.children.length
+            //         emptyFolder.children.push(curBk)
+            //         //bookmarks.splice(i, 1)
+            //         //i = i - 1
+            //     }
+            // }
+            // console.log(emptyFolder)
+            // bookmarks.push(emptyFolder)
+            // console.log(bookmarks)
+            //-
+
             this.setState({ bookmarks: bookmarks })
         });
     }
