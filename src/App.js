@@ -16,24 +16,15 @@ class App extends Component {
 
     getBookmarksFromChrome = () => {
         chrome.bookmarks.getTree(bookmarkTree => {
-            const bookmarks = bookmarkTree[0].children[0];
-            //const bookmarks = bookmarkTree[0];
-            /*let bookmarks = []
-            console.log(bookmarkTree[0].children)
-            for (const curbk of bookmarkTree[0].children) {
-                if (curbk.children.length > 0) {
-                    bookmarks.push(curbk)
-                }
-            }
-            console.log(bookmarks)*/
+            const bookmarks = [...bookmarkTree[0].children[0].children, ...bookmarkTree[0].children[1].children, bookmarkTree[0].children[2]]
             this.setState({ bookmarks: bookmarks })
         });
     }
 
     render() {
-        if (!this.state.bookmarks) return ('Is Empty');
+        if (this.state.bookmarks == null) return ('Is Empty');
 
-        const bookmarks = this.state.bookmarks.children
+        const bookmarks = this.state.bookmarks
 
         return (
             <div className="bk-flex-contener">
