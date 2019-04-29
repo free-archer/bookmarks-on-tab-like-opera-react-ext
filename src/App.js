@@ -15,9 +15,17 @@ class App extends Component {
     }
 
     getBookmarksFromChrome = () => {
-        console.log(chrome);
         chrome.bookmarks.getTree(bookmarkTree => {
             const bookmarks = bookmarkTree[0].children[0];
+            //const bookmarks = bookmarkTree[0];
+            /*let bookmarks = []
+            console.log(bookmarkTree[0].children)
+            for (const curbk of bookmarkTree[0].children) {
+                if (curbk.children.length > 0) {
+                    bookmarks.push(curbk)
+                }
+            }
+            console.log(bookmarks)*/
             this.setState({ bookmarks: bookmarks })
         });
     }

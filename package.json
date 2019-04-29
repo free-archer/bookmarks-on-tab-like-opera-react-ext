@@ -1,7 +1,7 @@
 {
-  "name": "chrome_extension",
-  "version": "1.0.0",
-  "description": "",
+  "name": "bookmarks-on-tab-like-opera",
+  "version": "0.0.2",
+  "description": "Bookmarks on tab like opera. Build on React.js.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github-work.com:murray-b/chrome_extension.git"
+    "url": "https://github.com/Bespalov-AV/bookmarks-on-tab-like-opera-react-ext"
   },
   "author": "",
   "license": "ISC",
