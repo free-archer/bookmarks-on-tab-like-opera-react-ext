@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: var(--width-bk);
     height: var(--heght-bk); 
     /*border: 1px solid #216BA3;*/
