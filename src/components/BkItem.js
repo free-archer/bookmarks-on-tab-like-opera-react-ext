@@ -15,14 +15,15 @@ export default class BkItem extends React.PureComponent {
     }
 
     getClassColorFromId(currentBk) {
+        let styles = {}
         if (currentBk) {
             const colorInd = currentBk.id.substr(-1)
-            const className = { backgroundColor: `var(--bg-color${colorInd})` }
-            return className
+            styles.backgroundColor = `var(--bg-color${colorInd})`;
+            //styles.backgroundImage = `url("${currentBk.url}")`;
         } else {
-            const className = { backgroundColor: `var(--bg-color0)` }
-            return className
+            styles = { backgroundColor: `var(--bg-color0)` }
         }
+        return styles
     }
 
     cutTitle(title) {
@@ -39,6 +40,9 @@ export default class BkItem extends React.PureComponent {
         const { currentBk, title } = this.props
         //const style = this.getClassColor()
         const style = this.getClassColorFromId(currentBk)
+        /*if (currentBk.url) {
+            style.backgroundImage= `url(${currentBk.url})`;
+        }*/
 
         return (
             <div
