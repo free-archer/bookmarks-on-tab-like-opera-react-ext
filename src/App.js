@@ -14,28 +14,58 @@ class App extends Component {
         this.getBookmarksFromChrome();
     }
 
+    prepareBookmarksSetEptiFolderAll(bookmarkTreeChildren) {
+        const bookmarks = []
+        const emptyFolder = { title: 'Пустая', id: 89898989, index: 0, children: [] }
+        for (const curBkFolder of bookmarkTreeChildren) {
+            console.log(curBkFolder, 'curBkFolder')
+            for (const curBk of curBkFolder.children) {
+                console.log(curBk, 'curBk')
+                if (!curBk.children) {
+                    curBk.index = emptyFolder.children.length
+                    emptyFolder.children.push(curBk)
+                }
+                else {
+                    bookmarks.push(curBk)
+                }
+            }
+        }
+        bookmarks.push(emptyFolder)
+        console.log(bookmarks, 'bookmarks')
+
+        return bookmarks
+    }
+
+    prepareBookmarksSetEptiFolder(bookmarksTemp) {
+        //попытка сделать папку для закладок без папки
+        const emptyFolder = { title: 'Пустая', id: 89898989, index: 0, children: [] }
+        const bookmarks = []
+
+        for (let curBk of bookmarksTemp) {
+
+            if (!curBk.children) {
+                curBk.index = emptyFolder.children.length
+                emptyFolder.children.push(curBk)
+
+            }
+            else {
+                bookmarks.push(curBk)
+            }
+        }
+        bookmarks.push(emptyFolder)
+
+        return bookmarks
+    }
+
     getBookmarksFromChrome = () => {
         chrome.bookmarks.getTree(bookmarkTree => {
-            const bookmarks = [...bookmarkTree[0].children[0].children, ...bookmarkTree[0].children[1].children, bookmarkTree[0].children[2]]
+            console.log(bookmarkTree[0].children[0].children, 'bookmarkTree[0].children[0].children')
 
-            //попытка сделать папку для закладок без папки
-            // const emptyFolder = { title: 'Пустая', id: 89898989, index: 0, children: [] }
-            // console.log(bookmarks)
-            // for (let i in bookmarks) {
+            const bookmarksTemp = [...bookmarkTree[0].children[0].children, ...bookmarkTree[0].children[1].children, bookmarkTree[0].children[2]]
 
-            //     const curBk = bookmarks[i]
+            const bookmarks = this.prepareBookmarksSetEptiFolder(bookmarksTemp)
 
-            //     if (!curBk.children) {
-            //         curBk.index = emptyFolder.children.length
-            //         emptyFolder.children.push(curBk)
-            //         //bookmarks.splice(i, 1)
-            //         //i = i - 1
-            //     }
-            // }
-            // console.log(emptyFolder)
-            // bookmarks.push(emptyFolder)
-            // console.log(bookmarks)
-            //-
+            //const bookmarks = this.prepareBookmarksSetEptiFolder(bookmarkTree[0].children)
 
             this.setState({ bookmarks: bookmarks })
         });
