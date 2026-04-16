@@ -1,5 +1,6 @@
 .bk-folder {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -14,5 +15,43 @@
     cursor: pointer;
     color: white;
     font-size: 15px;
+    gap: 8px;
+    box-sizing: border-box;
+    padding: 8px;
     /* vertical-align: middle; */
+}
+
+.bk-folder__icon {
+    position: relative;
+    display: block;
+    width: 42px;
+    height: 30px;
+    flex-shrink: 0;
+}
+
+.bk-folder__icon-top {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: 18px;
+    height: 9px;
+    border-radius: 4px 4px 0 0;
+    background: #f4bd39;
+}
+
+.bk-folder__icon-body {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 42px;
+    height: 24px;
+    border-radius: 5px;
+    background: #ffd769;
+}
+
+.bk-folder__title {
+    display: block;
+    max-width: 100%;
+    line-height: 1.2;
+    word-break: break-word;
 }

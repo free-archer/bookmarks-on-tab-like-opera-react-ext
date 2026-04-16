@@ -25,7 +25,11 @@ export default class BkFolder extends Component {
           className="bk-folder"
           onClick={this.setOpenFolder}
         >
-          {title}
+          <span className="bk-folder__icon" aria-hidden="true">
+            <span className="bk-folder__icon-top" />
+            <span className="bk-folder__icon-body" />
+          </span>
+          <span className="bk-folder__title">{title}</span>
         </div>
 
         {this.state.isOpenFolder &&
