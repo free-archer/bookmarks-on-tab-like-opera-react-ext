@@ -2,6 +2,11 @@
 
 Bookmarks on tab like opera created by react.js.
 
+Current baseline:
+- Manifest V3
+- React 19
+- Webpack 5
+
 In Opera is conveniently realized the bookmark. However, Chrome is a great browser, it has a lot of useful extensions needed for the programmer. I decided to make an extension for chrome, which would display bookmarks, as in opera.
 
 How the extension works: It takes your current bookmarks and displays them as blocks. To interact, you can click on the color block will open a link. If you click on the gray folder, it will open a popup with the contents of the folder. If there were more than 4 bookmarks in the bookmarks folder, click on the block header to see them all. All interaction with the tabs remains the standard means Chrome. My extension only displays bookmarks on the page as tiles.
@@ -16,6 +21,15 @@ npm install
 npm run build
 
 Add the Extension in chrome from folder "dist" in project.
+
+Requirements:
+- Node.js 18.18+ (or newer LTS)
+
+Useful scripts:
+- `npm run lint` - static check for source files.
+- `npm run build` - production build into `dist`.
+- `npm run smoke` - validates built artifacts and MV3 manifest.
+- `npm test` - lint + build + smoke check.
 
 (see help: https://blog.hunter.io/how-to-install-a-chrome-extension-without-using-the-chrome-web-store-31902c780034)
 
@@ -44,6 +58,15 @@ Open your bookmarks press button
 ![](https://github.com/Bespalov-AV/bookmarks-in-tab-like-opera/raw/master/screenshots/Screenshot_3.png)
 
 После чего нажать загрузить распакованное расширение и выбрать папку dist с файлами расширения.
+
+Требования:
+- Node.js 18.18+ (или новее LTS)
+
+Скрипты:
+- `npm run lint` — статическая проверка исходников.
+- `npm run build` — production-сборка в `dist`.
+- `npm run smoke` — проверка артефактов и MV3-манифеста.
+- `npm test` — lint + build + smoke.
 
 
 ### реализация
