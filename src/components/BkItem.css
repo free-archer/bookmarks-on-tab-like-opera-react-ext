@@ -13,7 +13,8 @@
     overflow: hidden;
     cursor: pointer;
     color: white;
-    font-size: 12px;
+    font-size: 15px;
+    line-height: 1.25;
      vertical-align: middle; 
 }
 
