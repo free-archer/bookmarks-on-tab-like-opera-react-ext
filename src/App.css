@@ -13,8 +13,12 @@
   --bg-color9: #55338E;
   --bg-color10: blue;
 
-  --heght-bk: 80px;
-  --width-bk: 120px;
+  --tile-size: 120px;
+  --width-bk: var(--tile-size);
+  --heght-bk: var(--tile-size);
+  --height-bk: var(--tile-size);
+  --bk-item-font-size: 15px;
+  --bk-title-font-size: 16px;
 
   --bg-body: cornflowerblue;
 }
@@ -40,10 +44,12 @@
 }
 .bk-search-contener {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 .bk-search-input {
-    width: min(480px, 100%);
+    width: min(480px, calc(100% - 50px));
     padding: 10px 14px;
     border: 1px solid #c4c9d4;
     border-radius: 10px;
@@ -61,6 +67,38 @@
     border-color: #3A6FB4;
     box-shadow: 0 0 0 3px rgba(58, 111, 180, 0.2);
 }
+.bk-settings-button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #c4c9d4;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #3A6FB4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.bk-settings-button:hover {
+    border-color: #3A6FB4;
+}
+
+.bk-settings-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(58, 111, 180, 0.2);
+}
+
+.bk-settings-button:active {
+    transform: scale(0.98);
+}
+
+.bk-settings-button__icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
 .bk-main-contener {
     display: flex;
     flex-direction: row;

@@ -1,7 +1,51 @@
 import { Component } from 'react';
 import './App.css';
 import BkContainer from './components/BkContainer';
+import SettingsModal from './components/SettingsModal';
 import { normalizeBookmarksForGrid } from './bookmarkUtils';
+
+const SETTINGS_STORAGE_KEY = 'uiSettings';
+
+const UI_SETTINGS_LIMITS = {
+  tileSize: { min: 64, max: 220 },
+  tileTextSize: { min: 10, max: 32 },
+  titleSize: { min: 12, max: 36 }
+};
+
+const DEFAULT_UI_SETTINGS = {
+  tileSize: 120,
+  tileTextSize: 15,
+  titleSize: 16
+};
+
+const clampSetting = (value, { min, max }, fallback) => {
+  const parsedValue = Number(value);
+
+  if (!Number.isFinite(parsedValue)) {
+    return fallback;
+  }
+
+  const roundedValue = Math.round(parsedValue);
+  return Math.min(max, Math.max(min, roundedValue));
+};
+
+const normalizeUiSettings = (settings = {}) => ({
+  tileSize: clampSetting(
+    settings.tileSize,
+    UI_SETTINGS_LIMITS.tileSize,
+    DEFAULT_UI_SETTINGS.tileSize
+  ),
+  tileTextSize: clampSetting(
+    settings.tileTextSize,
+    UI_SETTINGS_LIMITS.tileTextSize,
+    DEFAULT_UI_SETTINGS.tileTextSize
+  ),
+  titleSize: clampSetting(
+    settings.titleSize,
+    UI_SETTINGS_LIMITS.titleSize,
+    DEFAULT_UI_SETTINGS.titleSize
+  )
+});
 
 class App extends Component {
   constructor() {
@@ -9,12 +53,72 @@ class App extends Component {
     this.state = {
       bookmarks: [],
       isLoaded: false,
-      searchQuery: ''
+      searchQuery: '',
+      isSettingsOpen: false,
+      uiSettings: { ...DEFAULT_UI_SETTINGS }
     };
   }
 
   componentDidMount = () => {
     this.getBookmarksFromChrome();
+    this.loadUiSettings();
+  }
+
+  getChromeStorageLocal = () => {
+    if (
+      typeof chrome === 'undefined'
+      || !chrome.storage
+      || !chrome.storage.local
+    ) {
+      return null;
+    }
+
+    return chrome.storage.local;
+  }
+
+  loadUiSettings = () => {
+    const storage = this.getChromeStorageLocal();
+
+    if (!storage) {
+      return;
+    }
+
+    storage.get([SETTINGS_STORAGE_KEY], (result) => {
+      if (chrome.runtime && chrome.runtime.lastError) {
+        return;
+      }
+
+      const savedSettings = result ? result[SETTINGS_STORAGE_KEY] : null;
+      this.setState({ uiSettings: normalizeUiSettings(savedSettings) });
+    });
+  }
+
+  saveUiSettings = (nextSettings) => {
+    const normalizedSettings = normalizeUiSettings(nextSettings);
+    this.setState({
+      uiSettings: normalizedSettings,
+      isSettingsOpen: false
+    });
+
+    const storage = this.getChromeStorageLocal();
+
+    if (!storage) {
+      return;
+    }
+
+    storage.set({ [SETTINGS_STORAGE_KEY]: normalizedSettings }, () => {
+      if (chrome.runtime && chrome.runtime.lastError) {
+        return;
+      }
+    });
+  }
+
+  openSettingsModal = () => {
+    this.setState({ isSettingsOpen: true });
+  }
+
+  closeSettingsModal = () => {
+    this.setState({ isSettingsOpen: false });
   }
 
   getBookmarksFromChrome = () => {
@@ -85,8 +189,22 @@ class App extends Component {
   }
 
   render() {
-    const { bookmarks, isLoaded, searchQuery } = this.state;
+    const {
+      bookmarks,
+      isLoaded,
+      searchQuery,
+      isSettingsOpen,
+      uiSettings
+    } = this.state;
     const visibleBookmarks = this.getVisibleBookmarks(bookmarks, searchQuery);
+    const uiVariables = {
+      '--tile-size': `${uiSettings.tileSize}px`,
+      '--width-bk': `${uiSettings.tileSize}px`,
+      '--heght-bk': `${uiSettings.tileSize}px`,
+      '--height-bk': `${uiSettings.tileSize}px`,
+      '--bk-item-font-size': `${uiSettings.tileTextSize}px`,
+      '--bk-title-font-size': `${uiSettings.titleSize}px`
+    };
 
     if (!isLoaded) {
       return 'Загрузка закладок...';
@@ -97,7 +215,7 @@ class App extends Component {
     }
 
     return (
-      <div className="bk-flex-contener">
+      <div className="bk-flex-contener" style={uiVariables}>
         <div className="bk-content-contener">
           <div className="bk-search-contener">
             <input
@@ -108,6 +226,16 @@ class App extends Component {
               placeholder="Поиск по закладкам и URL"
               aria-label="Поиск закладок"
             />
+
+            <button
+              type="button"
+              className="bk-settings-button"
+              onClick={this.openSettingsModal}
+              aria-label="Открыть настройки отображения"
+              title="Настройки"
+            >
+              <span className="bk-settings-button__icon" aria-hidden="true">⚙</span>
+            </button>
           </div>
 
           {visibleBookmarks.length === 0
@@ -123,6 +251,14 @@ class App extends Component {
                 ))}
               </div>
             )}
+
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            settings={uiSettings}
+            limits={UI_SETTINGS_LIMITS}
+            onClose={this.closeSettingsModal}
+            onSave={this.saveUiSettings}
+          />
         </div>
       </div>
     );

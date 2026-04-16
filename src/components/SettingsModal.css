@@ -1,0 +1,15 @@
+.settings-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings-modal__group {
+  margin-bottom: 4px;
+}
+
+.settings-modal__hint {
+  display: block;
+  margin-top: 4px;
+  color: #576074;
+}
