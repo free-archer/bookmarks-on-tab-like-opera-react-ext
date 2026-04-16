@@ -1,13 +1,16 @@
 {
   "name": "bookmarks-on-tab-like-opera",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Bookmarks on tab like opera. Build on React.js.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "webpack --mode production",
     "build": "webpack --mode production",
-    "build:watch": "webpack --watch --mode production"
+    "build:watch": "webpack --watch --mode development",
+    "lint": "eslint src/**/*.js",
+    "smoke": "node scripts/smoke-check.js",
+    "format": "prettier --write \"**/*.{js,json,md,css,html}\"",
+    "format:check": "prettier --check \"**/*.{js,json,md,css,html}\"",
+    "test": "npm run lint && npm run build && npm run smoke"
   },
   "repository": {
     "type": "git",
@@ -16,25 +19,31 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emotion/core": "^10.0.0",
-    "@emotion/styled": "^10.0.0",
+    "bootstrap": "^5.3.8",
     "normalize.css": "^8.0.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^4.3.1",
-    "bootstrap": "^4.3.1",
-    "react-bootstrap": "^1.0.0-beta.6"
+    "react": "^19.2.5",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/preset-env": "^7.1.6",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.0-beta.0",
-    "babel-plugin-emotion": "^10.0.0",
-    "css-loader": "^1.0.1",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.26.1",
-    "webpack-cli": "^3.1.2"
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-class-properties": "^7.28.6",
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-react": "^7.28.5",
+    "@eslint/js": "^10.0.1",
+    "ajv": "^8.18.0",
+    "ajv-keywords": "^5.1.0",
+    "babel-loader": "^10.1.1",
+    "copy-webpack-plugin": "^14.0.0",
+    "css-loader": "^7.1.4",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0",
+    "prettier": "^3.8.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }

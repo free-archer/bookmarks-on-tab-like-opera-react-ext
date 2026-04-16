@@ -1,81 +1,47 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './BkContainer.css';
 
-import BkFolder from './BkFolder'
-import BkItem from './BkItem'
-
 import BkModal from './BkModal'
+import { PREVIEW_ITEMS_LIMIT, renderBookmarkChildren } from './renderBookmarkChildren';
 
 export default class BkContainer extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            isOpenFolder: false,
-            idOpenFolder: 0
+    this.state = {
+      isOpenFolder: false
+    };
+  }
+
+  setOpenFolder = () => {
+    this.setState((prevState) => ({ isOpenFolder: !prevState.isOpenFolder }));
+  }
+
+  render() {
+    const { title, bkFolder } = this.props;
+    const renderComponent = renderBookmarkChildren(bkFolder, { limit: PREVIEW_ITEMS_LIMIT });
+
+    return (
+      <div className="contener-card">
+        <>
+          <div className="title" onClick={this.setOpenFolder}>
+            {title}
+          </div>
+
+          <div className="bk-contener">
+            {renderComponent}
+          </div>
+        </>
+
+        {this.state.isOpenFolder &&
+          <BkModal
+            bkFolder={bkFolder}
+            title={title}
+            setOpenFolder={this.setOpenFolder}
+            isOpenFolder={this.state.isOpenFolder}
+          />
         }
-    }
-
-    setOpenFolder = (id) => {
-        this.setState({ isOpenFolder: !this.state.isOpenFolder })
-    }
-
-    render() {
-        const { title, bkFolder } = this.props
-        let renderComponent = []
-
-        if (!bkFolder.children) {
-            renderComponent.push(
-                <BkItem
-                    title={title}
-                />)
-        } else {
-
-            for (const currentBk of bkFolder.children) {
-                if (currentBk.index > 3) break;
-
-                if (!currentBk.children) {
-                    renderComponent.push(
-                        <BkItem
-                            title={currentBk.title}
-                            currentBk={currentBk}
-                        />)
-                } else {
-                    renderComponent.push(
-                        <BkFolder
-                            key={currentBk.id}
-                            currentBk={currentBk}
-                            title={currentBk.title}
-                        />
-                    )
-                }
-            }
-        }
-
-        return (
-            <div className="contener-card">
-                <React.Fragment>
-                    <div className="title"
-                        onClick={() => this.setOpenFolder(this.props.bkFolder.id)}
-                    >
-                        {title}
-                    </div>
-
-                    <div className="bk-contener">
-                        {renderComponent}
-                    </div>
-                </React.Fragment>
-
-                {this.state.isOpenFolder &&
-                    <BkModal
-                        bkFolder={bkFolder}
-                        title={title}
-                        setOpenFolder={this.setOpenFolder}
-                        isOpenFolder={this.state.isOpenFolder}
-                    />
-                }
-            </div>
-        )
-    }
+      </div>
+    );
+  }
 }
-
