@@ -8,7 +8,8 @@ class App extends Component {
     super();
     this.state = {
       bookmarks: [],
-      isLoaded: false
+      isLoaded: false,
+      searchQuery: ''
     };
   }
 
@@ -26,8 +27,66 @@ class App extends Component {
     });
   }
 
+  updateSearchQuery = (event) => {
+    this.setState({ searchQuery: event.target.value });
+  }
+
+  includesQuery = (value, normalizedQuery) => {
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    return value.toLowerCase().includes(normalizedQuery);
+  }
+
+  filterBookmarkNode = (bookmarkNode, normalizedQuery) => {
+    if (!bookmarkNode || typeof bookmarkNode !== 'object') {
+      return null;
+    }
+
+    const hasChildren = Array.isArray(bookmarkNode.children);
+    const matchesTitle = this.includesQuery(bookmarkNode.title, normalizedQuery);
+    const matchesUrl = this.includesQuery(bookmarkNode.url, normalizedQuery);
+
+    if (!hasChildren) {
+      return matchesTitle || matchesUrl ? bookmarkNode : null;
+    }
+
+    if (matchesTitle) {
+      return bookmarkNode;
+    }
+
+    const filteredChildren = bookmarkNode.children
+      .map((childBookmark) => this.filterBookmarkNode(childBookmark, normalizedQuery))
+      .filter(Boolean);
+
+    if (filteredChildren.length === 0) {
+      return null;
+    }
+
+    return {
+      ...bookmarkNode,
+      children: filteredChildren
+    };
+  }
+
+  getVisibleBookmarks = (bookmarks, searchQuery) => {
+    const normalizedQuery = typeof searchQuery === 'string'
+      ? searchQuery.trim().toLowerCase()
+      : '';
+
+    if (!normalizedQuery) {
+      return bookmarks;
+    }
+
+    return bookmarks
+      .map((bookmarkFolder) => this.filterBookmarkNode(bookmarkFolder, normalizedQuery))
+      .filter(Boolean);
+  }
+
   render() {
-    const { bookmarks, isLoaded } = this.state;
+    const { bookmarks, isLoaded, searchQuery } = this.state;
+    const visibleBookmarks = this.getVisibleBookmarks(bookmarks, searchQuery);
 
     if (!isLoaded) {
       return 'Загрузка закладок...';
@@ -39,14 +98,31 @@ class App extends Component {
 
     return (
       <div className="bk-flex-contener">
-        <div className="bk-main-contener">
-          {bookmarks.map((currentBk) => (
-            <BkContainer
-              key={currentBk.id}
-              bkFolder={currentBk}
-              title={currentBk.title}
+        <div className="bk-content-contener">
+          <div className="bk-search-contener">
+            <input
+              className="bk-search-input"
+              type="search"
+              value={searchQuery}
+              onChange={this.updateSearchQuery}
+              placeholder="Поиск по закладкам и URL"
+              aria-label="Поиск закладок"
             />
-          ))}
+          </div>
+
+          {visibleBookmarks.length === 0
+            ? <div className="bk-empty-search">Ничего не найдено по вашему запросу.</div>
+            : (
+              <div className="bk-main-contener">
+                {visibleBookmarks.map((currentBk) => (
+                  <BkContainer
+                    key={currentBk.id}
+                    bkFolder={currentBk}
+                    title={currentBk.title}
+                  />
+                ))}
+              </div>
+            )}
         </div>
       </div>
     );
