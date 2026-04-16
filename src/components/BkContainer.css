@@ -17,4 +17,5 @@
     cursor: pointer;
     width: 100%;
     text-align: center;
+    font-size: var(--bk-title-font-size);
 }

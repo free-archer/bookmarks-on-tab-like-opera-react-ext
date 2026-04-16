@@ -13,7 +13,7 @@
     overflow: hidden;
     cursor: pointer;
     color: white;
-    font-size: 15px;
+    font-size: var(--bk-item-font-size);
     line-height: 1.25;
      vertical-align: middle; 
 }
